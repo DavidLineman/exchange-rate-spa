@@ -1,11 +1,14 @@
 import React from "react";
 import { checkStatus, json } from './utils';
 
+const host = 'api.frankfurter.app';
+
 class exchangeRate extends React.Component {
   constructor(props);
   super(props) {
   this.state = {
-    searchTerm: '',
+    startingRate: '',
+    convertingRate: '',
     results: [],
     error: '',
   };
@@ -14,4 +17,8 @@ class exchangeRate extends React.Component {
   this.handleSubmit = this.handleSubmit.bind(this);
   this.handleChange = this.handleChange.bind(this);
   }
+
+
+
+
 }
