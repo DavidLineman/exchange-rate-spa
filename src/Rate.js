@@ -1,24 +1,13 @@
 import React from "react";
 import { checkStatus, json } from './utils';
 
-const host = 'api.frankfurter.app';
 
-class exchangeRate extends React.Component {
-  constructor(props);
-  super(props) {
-  this.state = {
-    startingRate: '',
-    convertingRate: '',
-    results: [],
-    error: '',
-  };
-    
-
-  this.handleSubmit = this.handleSubmit.bind(this);
-  this.handleChange = this.handleChange.bind(this);
-  }
-
-
-
-
+class Rate extends React.Component {
+  
+  const host = 'api.frankfurter.app';
+  fetch(`https://${host}/latest?amount=10&from=GBP&to=USD`)
+    .then(resp => resp.json())
+    .then((data) => {
+      alert(`10 GBP = ${data.rates.USD} USD`);
+    });
 }
