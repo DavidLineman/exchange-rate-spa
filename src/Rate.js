@@ -38,20 +38,23 @@ class RateFinder extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             <div className='container'>
-              <label>Amount</label>
-              <input type="text" name="amount" value={this.state.amount} onChange={this.handleChange}/>
+              <label>Amount
+                <input type="text" name="amount" value={this.state.amount} onChange={this.handleChange}/>
+              </label>
             </div>
             <div className='container'>
-              <label>From:</label>
-              <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleChange}>
-                <option value="USD">USD</option>
-                <option value="GBP">GBP</option>
-              </select>
-              <label>To:</label>
-              <select name="convertTo" value={this.state.convertTo} onChange={this.handleChange}>
-                <option value="GBP">GBP</option>
-                <option value="USD">USD</option>
-              </select>
+              <label>From:
+                <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleChange}>
+                  <option value="USD">USD</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </label>
+                <label>To:
+                <select name="convertTo" value={this.state.convertTo} onChange={this.handleChange}>
+                  <option value="GBP">GBP</option>
+                  <option value="USD">USD</option>
+                </select>
+              </label>
             </div>
             <button type='submit' value='submit'>Submit</button>
           </div>
