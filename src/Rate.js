@@ -13,44 +13,68 @@ class RateFinder extends React.Component {
       convertFrom: 'GBP',
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleAmountChange = this.handleAmountChange.bind(this);
+    this.handleConvertToChange = this.handleConvertToChange.bind(this);
+    this.handleConvertFromChange = this.handleConvertFromChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    let { amount, convertTo, convertFrom } = event.target;
-    const value = event.target.value;
+  handleAmountChange(event) {
     this.setState({
-      amount: value,
-      convertTo: value,
-      convertFrom: value
+      amount: event.target.value,
+    });
+  }
+
+  handleConvertFromChange(event) {
+    this.setState({
+      convertFrom: event.target.value,
+    });
+  }
+
+  handleConvertToChange(event) {
+    this.setState({
+      convertTo: event.target.value,
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     let { amount, convertTo, convertFrom } = this.state;
-    alert(this.state.value)
+    // convertTo = convertTo.parse()
+
+    fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
+    .then(resp => resp.json())
+    .then((data) => {
+      console.log(data.rates[1]);
+      console.log(convertTo);
+      console.log(convertFrom);
+      console.log(amount);
+    });
   }
+
+  
+
+  
    
     render () {
+      const { amount, convertTo, convertFrom } = this.state;
       return(
         <form onSubmit={this.handleSubmit}>
           <div>
             <div className='container'>
               <label>Amount
-                <input type="text" name="amount" value={this.state.amount} onChange={this.handleChange}/>
+                <input type="text" name="amount" value={this.state.amount} onChange={this.handleAmountChange}/>
               </label>
             </div>
             <div className='container'>
               <label>From:
-                <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleChange}>
+                <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleConvertFromChange}>
                   <option value="USD">USD</option>
                   <option value="GBP">GBP</option>
                 </select>
               </label>
                 <label>To:
-                <select name="convertTo" value={this.state.convertTo} onChange={this.handleChange}>
+                <select name="convertTo" value={this.state.convertTo} onChange={this.handleConvertToChange}>
                   <option value="GBP">GBP</option>
                   <option value="USD">USD</option>
                 </select>
@@ -63,16 +87,6 @@ class RateFinder extends React.Component {
         </form>
       )
     }
-
-
-
- 
-
-
-
-
-
-  
 
 
 
