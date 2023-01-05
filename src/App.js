@@ -5,8 +5,10 @@ import RateFinder from './Rate';
 
 function App() {
   return (
+    
+    
     <div className="App">
-      <RateFinder />
+        <RateFinder />
     </div>
   );
 }

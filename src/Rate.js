@@ -1,9 +1,7 @@
 import React from "react";
 import { checkStatus, json } from './utils';
 
-const host = 'api.frankfurter.app';
-
-
+let results = document.getElementById('results');
 class RateFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -40,22 +38,19 @@ class RateFinder extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let { amount, convertTo, convertFrom } = this.state;
-    // convertTo = convertTo.parse()
 
     fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
     .then(resp => resp.json())
     .then((data) => {
-      console.log(data.rates[1]);
+      for (const [key, value] of Object.entries(data.rates)) {
+        results.innerText = `${key}: ${value}`;
+      }
       console.log(convertTo);
       console.log(convertFrom);
       console.log(amount);
     });
   }
 
-  
-
-  
-   
     render () {
       const { amount, convertTo, convertFrom } = this.state;
       return(
@@ -71,18 +66,20 @@ class RateFinder extends React.Component {
                 <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleConvertFromChange}>
                   <option value="USD">USD</option>
                   <option value="GBP">GBP</option>
+                  <option value="EUR">EUR</option>
                 </select>
               </label>
                 <label>To:
                 <select name="convertTo" value={this.state.convertTo} onChange={this.handleConvertToChange}>
                   <option value="GBP">GBP</option>
                   <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
                 </select>
               </label>
             </div>
-            <button type='submit' value='submit'>Submit</button>
+            <button className="btn btn-success" type="submit" value='submit'>Submit</button>
           </div>
-          <div className="results"></div>
+          
     
         </form>
       )
