@@ -3,10 +3,10 @@ import './App.css';
 import { ReactDOM } from 'react';
 import RateFinder from './Rate';
 
+
 function App() {
   return (
-    
-    
+  
     <div className="App">
         <RateFinder />
     </div>

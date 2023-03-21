@@ -2,6 +2,9 @@ import React from "react";
 import { checkStatus, json } from './utils';
 
 let results = document.getElementById('results');
+let rateTable = document.getElementById('table');
+let acronyms = ['USD', 'GBP', 'EUR', 'JPY'];
+
 class RateFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -42,14 +45,50 @@ class RateFinder extends React.Component {
     fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
     .then(resp => resp.json())
     .then((data) => {
+      // console.log(data);
       for (const [key, value] of Object.entries(data.rates)) {
         results.innerText = `${key}: ${value}`;
       }
-      console.log(convertTo);
-      console.log(convertFrom);
-      console.log(amount);
+      
+
+    
+      // console.log(convertTo);
+      // console.log(convertFrom);
+      // console.log(amount);
     });
+
+    acronyms.map(a => {
+      if (convertFrom != a) {
+        fetch(`https://api.frankfurter.app/latest?amount=1&from=${convertFrom}&to=${a}`)
+        .then(resp => resp.json())
+        .then((data) => {
+          let rates = data.rates;
+          console.log(rates);
+
+          
+            for (let x = 0; data.rates.length; x++) {
+              rateTable.innerHTML = `${x}:  ${data.rates[x]}`;
+              console.log(x + " " + data.rates[x])
+            }
+            
+
+  
+          
+          
+          // for (const key of Object.entries(data.rates)) {
+          //   console.log(Object.keys);
+          //   console.log(data.rates[key]);
+          //   
+          // }
+          
+        })
+      } 
+      
+    })
+    
+    
   }
+
 
     render () {
       const { amount, convertTo, convertFrom } = this.state;
@@ -79,8 +118,6 @@ class RateFinder extends React.Component {
             </div>
             <button className="btn btn-success" type="submit" value='submit'>Submit</button>
           </div>
-          
-    
         </form>
       )
     }
