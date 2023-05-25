@@ -40,6 +40,7 @@ class RateFinder extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let { amount, convertTo, convertFrom } = this.state;
+    let rates = ["USD", "GBP", "EUR"]
 
     fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
     .then(resp => resp.json())
@@ -51,8 +52,29 @@ class RateFinder extends React.Component {
       console.log(convertTo);
       console.log(convertFrom);
       console.log(amount);
+      rates.forEach(rate => 
+        
+          fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
+          .then(resp => resp.json())
+          .then((data) => {
+            if(convertFrom !== rate) {
+              console.log(data.rates)
+            }
+
+          })
+        
+        
+        );
+    
     });
   }
+
+
+  // getRateTable(event) {
+  //   event.preventDefault();
+  //   let { convertTo } = this.state;
+    
+  // }
 
     render () {
       const { amount, convertTo, convertFrom } = this.state;
