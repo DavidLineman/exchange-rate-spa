@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { ReactDOM } from 'react';
 import RateFinder from './Rate';
+import Table from './Table';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
     
     <div className="App">
         <RateFinder />
+        <Table />
     </div>
   );
 }

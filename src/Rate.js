@@ -2,6 +2,8 @@ import React from "react";
 import { checkStatus, json } from './utils';
 
 let results = document.getElementById('results');
+
+
 class RateFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +44,7 @@ class RateFinder extends React.Component {
     fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
     .then(resp => resp.json())
     .then((data) => {
+      console.log(data.rates);
       for (const [key, value] of Object.entries(data.rates)) {
         results.innerText = `${key}: ${value}`;
       }
@@ -77,13 +80,18 @@ class RateFinder extends React.Component {
                 </select>
               </label>
             </div>
+           
             <button className="btn btn-success" type="submit" value='submit'>Submit</button>
+
+            
           </div>
-          
-    
+
         </form>
       )
+
     }
+
+    
 
 
 
