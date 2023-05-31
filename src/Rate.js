@@ -42,39 +42,45 @@ class RateFinder extends React.Component {
     let { amount, convertTo, convertFrom } = this.state;
     let rates = ["USD", "GBP", "EUR"]
 
-    fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
-    .then(resp => resp.json())
-    .then((data) => {
-      console.log(data.rates);
-      for (const [key, value] of Object.entries(data.rates)) {
-        results.innerText = `${key}: ${value}`;
+    for(let i = 0; i < rates.length; i++) {
+      console.log(rates[i])
+      if(rates[i] === convertFrom) {
+        let index = rates.indexOf(rates[i])
+        rates.splice(index, 1);
       }
-      console.log(convertTo);
-      console.log(convertFrom);
-      console.log(amount);
+    }
+      
+
+    // fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
+    // .then(resp => resp.json())
+    // .then((data) => {
+    //   console.log(data.rates);
+    //   for (const [key, value] of Object.entries(data.rates)) {
+    //     results.innerText = `${key}: ${value}`;
+    //   }
+    //   console.log(convertTo);
+    //   console.log(convertFrom);
+    //   console.log(amount);
       rates.forEach(rate => 
-        
           fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
           .then(resp => resp.json())
           .then((data) => {
-            if(convertFrom !== rate) {
-              console.log(data.rates)
+             
+            let newData = data.rates;
+            console.log(newData);
+            for (const [key, value] of Object.entries(data.rates)) {
+              results.innerText = `${key}: ${value}`;
             }
+            
 
           })
         
         
         );
     
-    });
-  }
+    };
+  
 
-
-  // getRateTable(event) {
-  //   event.preventDefault();
-  //   let { convertTo } = this.state;
-    
-  // }
 
     render () {
       const { amount, convertTo, convertFrom } = this.state;
@@ -111,7 +117,7 @@ class RateFinder extends React.Component {
         </form>
       )
 
-    }
+    };
 
     
 
