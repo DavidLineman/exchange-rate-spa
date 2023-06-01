@@ -65,9 +65,15 @@ class RateFinder extends React.Component {
           fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
           .then(resp => resp.json())
           .then((data) => {
+            // let dataResults = [];
+            // dataResults.push(data.rates);
              
-            let newData = data.rates;
-            console.log(newData);
+
+            let newData = data;
+            for(let i = 0; i < newData.length; i++) {
+              console.log(newData[i][i]);
+            }
+
             for (const [key, value] of Object.entries(data.rates)) {
               results.innerText = `${key}: ${value}`;
             }
