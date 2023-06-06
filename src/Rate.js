@@ -42,14 +42,13 @@ class RateFinder extends React.Component {
     let { amount, convertTo, convertFrom } = this.state;
     let rates = ["USD", "GBP", "EUR"]
 
-    for(let i = 0; i < rates.length; i++) {
-      console.log(rates[i])
-      if(rates[i] === convertFrom) {
+    for (let i = 0; i < rates.length; i++) {
+      if (rates[i] === convertFrom) {
         let index = rates.indexOf(rates[i])
         rates.splice(index, 1);
       }
     }
-      
+
 
     // fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
     // .then(resp => resp.json())
@@ -61,71 +60,79 @@ class RateFinder extends React.Component {
     //   console.log(convertTo);
     //   console.log(convertFrom);
     //   console.log(amount);
-      rates.forEach(rate => 
-          fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
-          .then(resp => resp.json())
-          .then((data) => {
-            // let dataResults = [];
-            // dataResults.push(data.rates);
-             
+    let dataResults = [];
 
-            let newData = data;
-            for(let i = 0; i < newData.length; i++) {
-              console.log(newData[i][i]);
-            }
+    rates.forEach(rate =>
+      fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
+        .then(resp => resp.json())
+        .then((data) => {
+          
+          dataResults.push(data);
 
-            for (const [key, value] of Object.entries(data.rates)) {
-              results.innerText = `${key}: ${value}`;
-            }
-            
+          
 
-          })
-        
-        
-        );
+
+          // let newData = data;
+          // for(let i = 0; i < newData.length; i++) {
+          //   console.log(newData[i]);
+          // }
+
+          for (const [key, value] of Object.entries(data.rates)) {
+            results.innerText = `${key}: ${value}`;
+          }
+
+
+        })
+
+
+    );
+
     
-    };
-  
+    console.log(dataResults);
+
+  };
 
 
-    render () {
-      const { amount, convertTo, convertFrom } = this.state;
-      return(
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <div className='container'>
-              <label>Amount
-                <input type="text" name="amount" value={this.state.amount} onChange={this.handleAmountChange}/>
-              </label>
-            </div>
-            <div className='container'>
-              <label>From:
-                <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleConvertFromChange}>
-                  <option value="USD">USD</option>
-                  <option value="GBP">GBP</option>
-                  <option value="EUR">EUR</option>
-                </select>
-              </label>
-                <label>To:
-                <select name="convertTo" value={this.state.convertTo} onChange={this.handleConvertToChange}>
-                  <option value="GBP">GBP</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                </select>
-              </label>
-            </div>
-           
-            <button className="btn btn-success" type="submit" value='submit'>Submit</button>
 
-            
+  render() {
+    const { amount, convertTo, convertFrom } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div>
+          <div className='container'>
+            <label>Amount
+              <input type="text" name="amount" value={this.state.amount} onChange={this.handleAmountChange} />
+            </label>
+          </div>
+          <div className='container'>
+            <label>From:
+              <select name="convertFrom" value={this.state.convertFrom} onChange={this.handleConvertFromChange}>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </label>
+            <label>To:
+              <select name="convertTo" value={this.state.convertTo} onChange={this.handleConvertToChange}>
+                <option value="GBP">GBP</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+              </select>
+            </label>
           </div>
 
-        </form>
-      )
+          <button className="btn btn-success" type="submit" value='submit'>Submit</button>
 
-    };
 
-    
+        </div>
+      </form>
+
+      
+    )
+
+  };
+
+
 
 
 
