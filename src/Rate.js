@@ -67,17 +67,23 @@ class RateFinder extends React.Component {
         .then(resp => resp.json())
         .then((data) => {
           
-          dataResults.push(data);
+          dataResults.push(data.rates);
 
-          
+          let firstRate = dataResults[0];
+          // console.log(firstRate);
+          let secondRate = dataResults[1];
+          // console.log(secondRate);
 
+          let newRates = Object.assign(firstRate, secondRate);
+
+          console.log(newRates);
 
           // let newData = data;
           // for(let i = 0; i < newData.length; i++) {
           //   console.log(newData[i]);
           // }
 
-          for (const [key, value] of Object.entries(data.rates)) {
+          for (const [key, value] of Object.entries(newRates)) {
             results.innerText = `${key}: ${value}`;
           }
 
@@ -88,7 +94,7 @@ class RateFinder extends React.Component {
     );
 
     
-    console.log(dataResults);
+    // console.log(dataResults);
 
   };
 
