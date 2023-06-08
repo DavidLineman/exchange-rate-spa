@@ -49,55 +49,49 @@ class RateFinder extends React.Component {
       }
     }
 
-
-    // fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${convertTo}`)
-    // .then(resp => resp.json())
-    // .then((data) => {
-    //   console.log(data.rates);
-    //   for (const [key, value] of Object.entries(data.rates)) {
-    //     results.innerText = `${key}: ${value}`;
-    //   }
-    //   console.log(convertTo);
-    //   console.log(convertFrom);
-    //   console.log(amount);
     let dataResults = [];
+    let keys = [];
+    let values = [];
+    
 
     rates.forEach(rate =>
       fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
         .then(resp => resp.json())
         .then((data) => {
+
+          data.rates.map(x => console.log(x))
           
-          dataResults.push(data.rates);
-
-          let firstRate = dataResults[0];
-          // console.log(firstRate);
-          let secondRate = dataResults[1];
-          // console.log(secondRate);
-
-          let newRates = Object.assign(firstRate, secondRate);
-
-          console.log(newRates);
-
-          // let newData = data;
-          // for(let i = 0; i < newData.length; i++) {
-          //   console.log(newData[i]);
+          // console.log(Object.keys(data.rates));
+          // console.log(Object.values(data.rates));
+          // // keys.push(Object.keys(data.rates));
+          // // values.push(Object.values(data.rates));
+          // dataResults.push(data.rates);
+          
+          // for (let i = 0; i < dataResults.length; i++) {
+          //   console.log(dataResults[i])
           // }
 
-          for (const [key, value] of Object.entries(newRates)) {
-            results.innerText = `${key}: ${value}`;
+          for (const [key, value] of Object.entries(dataResults)) {
+            results.innerText = "Ba-Boom!";
+            
           }
 
 
         })
 
+        
 
     );
 
-    
-    // console.log(dataResults);
+    console.log(dataResults);
+    // console.log(keys);
+    // console.log(values);
 
+  
+    
   };
 
+  
 
 
   render() {
