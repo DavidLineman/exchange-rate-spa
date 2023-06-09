@@ -52,14 +52,24 @@ class RateFinder extends React.Component {
     let dataResults = [];
     let keys = [];
     let values = [];
-    
+    let newData;
+
+
+    // I am looping through the rates array and returning a converted rate each time. Resulting
+    // in newData containing one converted rate.
+
+    // I need to figure out a way to loop through after/during fetch so that new data contains all 
+    // returned data -- so that I can build a table from the object.
 
     rates.forEach(rate =>
       fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
         .then(resp => resp.json())
         .then((data) => {
-
-          data.rates.map(x => console.log(x))
+          newData = data.rates;
+          // console.log(data);
+          // let dataRates = data.rates;
+          // console.log(dataRates);
+          
           
           // console.log(Object.keys(data.rates));
           // console.log(Object.values(data.rates));
@@ -71,18 +81,28 @@ class RateFinder extends React.Component {
           //   console.log(dataResults[i])
           // }
 
-          for (const [key, value] of Object.entries(dataResults)) {
-            results.innerText = "Ba-Boom!";
+          // for (const [key, value] of Object.entries(dataResults)) {
+          //   results.innerText = "Ba-Boom!";
             
-          }
+          // }
 
 
         })
+        .then(() => {
+          dataResults.push(newData);
+          for (let i = 0; i < dataResults.length; i++) {
+            console.log(dataResults[i]);
+          }
+        })
 
+      
         
 
     );
 
+
+    // let dataObj = Object.assign({}, ...dataResults)
+    // console.log(dataObj);
     console.log(dataResults);
     // console.log(keys);
     // console.log(values);
