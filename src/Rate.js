@@ -90,9 +90,42 @@ class RateFinder extends React.Component {
         })
         .then(() => {
           dataResults.push(newData);
+          let dataKeys = [];
+          let dataValues = [];
           for (let i = 0; i < dataResults.length; i++) {
-            console.log(dataResults[i]);
+            dataKeys.push(Object.keys(dataResults[i]));
+            dataValues.push(Object.values(dataResults[i]));
+            dataKeys = dataKeys.flat();
+            dataValues = dataValues.flat();
+
+            
           }
+
+          let makeTable = (arr) => {
+            let table = document.createElement('table');
+            for (let key of arr) {
+              let row = document.createElement('tr');
+              Object.keys(key).forEach(key => {
+                let keys = document.createElement('td');
+                keys.appendChild(document.createTextNode(key));
+                row.appendChild(keys)
+              })
+              table.appendChild(row);
+            }
+            for (let entry of arr) {
+              let row = document.createElement('tr');
+              Object.values(entry).forEach(value => {
+                let data = document.createElement('td');
+                data.appendChild(document.createTextNode(value));
+                row.appendChild(data);
+              });
+              table.appendChild(row);
+            }
+            document.body.appendChild(table);
+            return table;
+          }
+
+          results.innerHTML = makeTable(dataResults);
         })
 
       
