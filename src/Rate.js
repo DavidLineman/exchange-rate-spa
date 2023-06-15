@@ -33,7 +33,7 @@ class RateFinder extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let { amount, convertTo, convertFrom } = this.state;
-    let rates = ["USD", "GBP", "EUR"]
+    let rates = ["USD", "GBP", "EUR", "JPY"]
 
 
     for (let i = 0; i < rates.length; i++) {
@@ -51,12 +51,6 @@ class RateFinder extends React.Component {
     
 
 
-    // I am looping through the rates array and returning a converted rate each time. Resulting
-    // in newData containing one converted rate.
-
-    // I need to figure out a way to loop through after/during fetch so that new data contains all 
-    // returned data -- so that I can build a table from the object.
-
     rates.forEach(rate =>
       fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${convertFrom}&to=${rate}`)
         .then(resp => resp.json())
@@ -69,43 +63,27 @@ class RateFinder extends React.Component {
           let table = document.getElementById('table-body');
           let firstRate = rates[0];
           let secondRate = rates[1];
+          let thirdRate = rates[2];
           let firstValue = Object.values(dataResults[0]);
-          let secondValue = Object.values(dataResults[1])
+          let secondValue = Object.values(dataResults[1]);
+          let thirdValue = Object.values(dataResults[2]);
 
           table.innerHTML = `
-                          <tr>
+                          <tr style={{border: "1px solid black"}}>
                             <td>${firstRate}</td>
                             <td>${firstValue}</td>
                           <tr>
-                          <tr>
+                          <tr style={{border: "1px solid black"}}>
                             <td>${secondRate}</td>
                             <td>${secondValue}</td>
-                          </tr>`;
-
-          // dataResults.forEach((item) => {
-          //     if(Object.value(item) !== 'undefined') {
-          //       table.innerHTML = `${table.innerHTML}<tr>
-          //             <td>${Object.key(item)}</td>
-          //             <td>${Object.value(item)}</td>
-          //         </tr>`
-          //       }
-          //     }
-             
-            
-          // );
+                          </tr>
+                          <tr style={{border: "1px solid black"}}>
+                            <td>${thirdRate}</td>
+                            <td>${thirdValue}</td>
+                          <tr>`;
             
       
-        }).then(() => {
-
-          dataResults.forEach(obj => {
-            for (const [key, value] of Object.entries(obj)) {
-              console.log(key, value);
-
-            }
-          })
-
         })
-      
 
       
          
@@ -133,6 +111,7 @@ class RateFinder extends React.Component {
                 <option value="USD">USD</option>
                 <option value="GBP">GBP</option>
                 <option value="EUR">EUR</option>
+                <option value="JPY">JPY</option>
               </select>
             </label>
           </div>
